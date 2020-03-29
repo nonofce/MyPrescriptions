@@ -1,2 +1,5 @@
 rootProject.name='My Prescriptions'
 include ':app'
+include ':domain'
+include ':data'
+include ':usecases'
