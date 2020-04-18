@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/navigation"
+    app:startDestination="@id/prescription">
+
+    <fragment
+        android:id="@+id/prescription"
+        android:name="com.nonofce.android.myprescriptions.ui.prescription.Prescription"
+        android:label="fragment_prescription"
+        tools:layout="@layout/fragment_prescription" />
+</navigation>

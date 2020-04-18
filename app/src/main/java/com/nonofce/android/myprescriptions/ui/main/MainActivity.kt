@@ -1,7 +1,8 @@
-package com.nonofce.android.myprescriptions
+package com.nonofce.android.myprescriptions.ui.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.nonofce.android.myprescriptions.R
 
 class MainActivity : AppCompatActivity() {
 
