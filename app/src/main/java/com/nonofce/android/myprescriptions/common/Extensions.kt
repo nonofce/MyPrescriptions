@@ -36,7 +36,7 @@ inline fun <reified T : ViewModel> Fragment.getViewModel(crossinline factory: ()
 }
 
 @Suppress("UNCHECKED_CAST")
-fun <T : Application> Fragment.getApp() =
+fun <T : Application> Fragment.getApp(): T =
     context!!.applicationContext as T
 
 

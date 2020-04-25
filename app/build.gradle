@@ -2,10 +2,10 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'androidx.navigation.safeargs.kotlin'
 
 android {
     compileSdkVersion 28
-
 
     defaultConfig {
         applicationId "com.nonofce.android.myprescriptions"
@@ -28,6 +28,10 @@ android {
         enabled true
     }
 
+    dataBinding {
+        enabled true
+    }
+
     kotlinOptions { jvmTarget = "1.8" }
 
     compileOptions {
@@ -38,7 +42,6 @@ android {
     testOptions {
         unitTests.returnDefaultValues = true
     }
-
 }
 
 dependencies {

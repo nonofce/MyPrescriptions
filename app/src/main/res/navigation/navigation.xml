@@ -3,11 +3,27 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/navigation"
-    app:startDestination="@id/prescription">
+    app:startDestination="@id/prescriptionList">
 
     <fragment
-        android:id="@+id/prescription"
-        android:name="com.nonofce.android.myprescriptions.ui.prescription.Prescription"
-        android:label="fragment_prescription"
-        tools:layout="@layout/fragment_prescription" />
+        android:id="@+id/prescriptionList"
+        android:name="com.nonofce.android.myprescriptions.ui.prescription.PrescriptionList"
+        android:label="@string/prescription_list_name"
+        tools:layout="@layout/fragment_prescription_list" >
+        <action
+            android:id="@+id/from_prescriptionList_to_prescriptionData"
+            app:destination="@id/prescriptionData" />
+    </fragment>
+    <fragment
+        android:id="@+id/prescriptionData"
+        android:name="com.nonofce.android.myprescriptions.ui.prescription.PrescriptionData"
+        android:label="fragment_prescription_data"
+        tools:layout="@layout/fragment_prescription_data" >
+        <argument
+            android:name="prescription"
+            app:argType="com.nonofce.android.myprescriptions.model.Prescription" />
+        <argument
+            android:name="dataOperation"
+            app:argType="com.nonofce.android.myprescriptions.common.DataOperations" />
+    </fragment>
 </navigation>

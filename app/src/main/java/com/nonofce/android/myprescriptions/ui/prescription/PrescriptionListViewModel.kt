@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.nonofce.android.myprescriptions.common.Event
 
-class PrescriptionViewModel : ViewModel() {
+class PrescriptionListViewModel : ViewModel() {
 
     private val _uiModel = MutableLiveData<UiModel>()
     val uiModel: LiveData<UiModel>

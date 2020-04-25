@@ -5,7 +5,7 @@
     android:id="@+id/frameLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.prescription.Prescription">
+    tools:context=".ui.prescription.PrescriptionList">
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/addPrescriptionButton"
@@ -14,8 +14,9 @@
         android:layout_marginEnd="32dp"
         android:layout_marginBottom="32dp"
         android:clickable="true"
-        android:src="@android:drawable/ic_menu_today"
+        android:focusable="true"
+        android:src="@drawable/ic_add_24dp"
+        app:tint="@android:color/white"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:focusable="true" />
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>
