@@ -1,14 +1,17 @@
 package com.nonofce.android.myprescriptions.common
 
 import android.app.Application
+import android.graphics.Color
 import android.view.Gravity
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.nonofce.android.myprescriptions.R
 import kotlin.properties.Delegates
 
 inline fun <ViewHolder : RecyclerView.ViewHolder, T> RecyclerView.Adapter<ViewHolder>.basicDiffUtil(
@@ -43,9 +46,12 @@ fun <T : Application> Fragment.getApp(): T =
     context!!.applicationContext as T
 
 
-fun Snackbar.showCentered(){
+fun Snackbar.showWithGravity(gravity: Int = Gravity.CENTER_VERTICAL) {
     val params = view.layoutParams as FrameLayout.LayoutParams;
-    params.gravity = Gravity.CENTER_VERTICAL
+    params.gravity = gravity
     view.layoutParams = params
+    view.setBackgroundColor(context.resources.getColor(R.color.colorAccent))
+    val textView = view.findViewById<TextView>(R.id.snackbar_text)
+    textView.setTextColor(Color.BLACK)
     show()
 }
