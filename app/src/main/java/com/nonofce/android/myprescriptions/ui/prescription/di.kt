@@ -2,6 +2,8 @@ package com.nonofce.android.myprescriptions.ui.prescription
 
 import com.nonofce.android.data.repository.Repository
 import com.nonofce.android.usecases.AddNewPrescription
+import com.nonofce.android.usecases.DeletePrescription
+import com.nonofce.android.usecases.LoadPrescriptions
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -10,7 +12,19 @@ import dagger.Subcomponent
 class PrescriptionListModule {
 
     @Provides
-    fun modelProvider(): PrescriptionListViewModel = PrescriptionListViewModel()
+    fun loadAllPrescriptionsUseCaseprovider(repository: Repository): LoadPrescriptions =
+        LoadPrescriptions(repository)
+
+    @Provides
+    fun deletePrescriptionUseCaseProvider(repository: Repository): DeletePrescription =
+        DeletePrescription(repository)
+
+    @Provides
+    fun modelProvider(
+        loadPrescriptions: LoadPrescriptions,
+        deletePrescription: DeletePrescription
+    ): PrescriptionListViewModel =
+        PrescriptionListViewModel(loadPrescriptions, deletePrescription)
 }
 
 @Subcomponent(modules = [PrescriptionListModule::class])
@@ -22,7 +36,8 @@ interface PrescriptionListComponent {
 class PrescriptionDataModule {
 
     @Provides
-    fun addNewPrescriptionUseCaseProvider(repository: Repository) = AddNewPrescription(repository)
+    fun addNewPrescriptionUseCaseProvider(repository: Repository): AddNewPrescription =
+        AddNewPrescription(repository)
 
     @Provides
     fun modelProvider(addNewPrescription: AddNewPrescription): PrescriptionDataViewModel =

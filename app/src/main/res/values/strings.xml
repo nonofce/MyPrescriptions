@@ -10,5 +10,10 @@
     <string name="done_button">Done</string>
     <string name="prescription_registered_OK">Your prescription has been registered</string>
     <string name="mandatory_field">This field should be entered</string>
+    <string name="who_made_the_prescription">Who made the prescription</string>
+    <string name="where_was_made_the_prescription">Where was made the prescription</string>
+    <string name="cancel_button">CANCEL</string>
+    <string name="ok_button">OK</string>
+    <string name="prescription_delete_confirmation">Are you sure you will delete this prescription?</string>
 
 </resources>

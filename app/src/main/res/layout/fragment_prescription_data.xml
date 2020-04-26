@@ -31,7 +31,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:errorEnabled="true">
-
+            <requestFocus/>
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,21 +90,22 @@
             android:layout_height="60dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:insetLeft="0dp"
 
+            android:insetLeft="0dp"
             android:insetTop="0dp"
             android:insetRight="0dp"
             android:insetBottom="0dp"
             android:padding="0dp"
-            app:icon="@drawable/ic_date_range_white_24dp"
             app:iconGravity="textStart"
             app:iconPadding="0dp"
             app:iconSize="24dp"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:shapeAppearanceOverlay="@style/CircleButton"
 
+            app:icon="@drawable/ic_date_range_white_24dp"
+
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/prescription_date"
-            app:layout_constraintTop_toBottomOf="@+id/where"
-            app:shapeAppearanceOverlay="@style/CircleButton" />
+            app:layout_constraintTop_toBottomOf="@+id/where" />
 
         <Button
             android:id="@+id/prescription_data_done_button"

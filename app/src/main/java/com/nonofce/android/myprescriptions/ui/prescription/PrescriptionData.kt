@@ -59,10 +59,10 @@ class PrescriptionData : Fragment() {
 
             prescriptionDateButton.setOnClickListener {
                 val builder = MaterialDatePicker.Builder.datePicker()
-                builder.setSelection(Calendar.getInstance().timeInMillis - ONE_DAY)
+                builder.setSelection(Calendar.getInstance().timeInMillis)
 
                 val constraintBuilder = CalendarConstraints.Builder()
-                constraintBuilder.setEnd(Calendar.getInstance().timeInMillis - ONE_DAY)
+                constraintBuilder.setEnd(Calendar.getInstance().timeInMillis)
                 constraintBuilder.setValidator(FutureDayValidator())
                 builder.setCalendarConstraints(constraintBuilder.build())
 

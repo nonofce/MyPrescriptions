@@ -7,10 +7,19 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class RoomDataSource(private val database: LocalDatabase) : LocalDataSource {
+    override suspend fun loadAllPrescriptions(): List<Prescription> = withContext(Dispatchers.IO) {
+        database.prescriptionDao().selectAllPrescriptions()
+    }
 
     override suspend fun addPrescription(prescription: Prescription) {
         withContext(Dispatchers.IO) {
             database.prescriptionDao().addNewPrescription(prescription.toNewLocal())
+        }
+    }
+
+    override suspend fun deletePrescription(prescriptionId: String) {
+        withContext(Dispatchers.IO){
+            database.prescriptionDao().deletePrescription(prescriptionId)
         }
     }
 }

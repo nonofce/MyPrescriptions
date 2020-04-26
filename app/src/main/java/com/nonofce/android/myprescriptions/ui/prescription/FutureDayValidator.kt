@@ -15,7 +15,7 @@ class FutureDayValidator() : CalendarConstraints.DateValidator {
 
     override fun isValid(date: Long): Boolean {
         val calendar = Calendar.getInstance()
-        return calendar.timeInMillis - ONE_DAY >= date
+        return calendar.timeInMillis >= date
     }
 
     override fun describeContents(): Int {
