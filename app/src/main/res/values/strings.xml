@@ -15,5 +15,6 @@
     <string name="cancel_button">CANCEL</string>
     <string name="ok_button">OK</string>
     <string name="prescription_delete_confirmation">Are you sure you will delete this prescription?</string>
+    <string name="confirmation">Confirmation</string>
 
 </resources>

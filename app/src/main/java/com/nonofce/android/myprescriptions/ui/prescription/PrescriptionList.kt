@@ -80,16 +80,19 @@ class PrescriptionList : Fragment() {
                 (prescriptionsList.adapter as PrescriptionAdapter).items = uiModel.prescriptions
             }
             is DeletePrescription -> {
-                MaterialAlertDialogBuilder(context).setMessage(getString(R.string.prescription_delete_confirmation))
-                    .setNeutralButton(
-                        getString(
-                            R.string.cancel_button
-                        )
-                    ) { _, _ ->
+                uiModel.event?.getContentIfNotHandled()?.let { prescription ->
+                    MaterialAlertDialogBuilder(context).setMessage(getString(R.string.prescription_delete_confirmation))
+                        .setTitle(getString(R.string.confirmation))
+                        .setNeutralButton(
+                            getString(
+                                R.string.cancel_button
+                            )
+                        ) { _, _ ->
 
-                    }.setPositiveButton(getString(R.string.ok_button)) { _, _ ->
-                        viewModel.deletePrescription(uiModel.prescription)
-                }.show()
+                        }.setPositiveButton(getString(R.string.ok_button)) { _, _ ->
+                            viewModel.deletePrescription(prescription)
+                        }.show()
+                }
             }
         }
     }

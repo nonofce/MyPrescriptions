@@ -16,6 +16,7 @@ import com.nonofce.android.myprescriptions.R
 import com.nonofce.android.myprescriptions.common.ONE_DAY
 import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
+import com.nonofce.android.myprescriptions.common.showCentered
 import com.nonofce.android.myprescriptions.databinding.FragmentPrescriptionDataBinding
 import com.nonofce.android.myprescriptions.model.toDomain
 import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel
@@ -99,7 +100,7 @@ class PrescriptionData : Fragment() {
                 binding.root,
                 R.string.prescription_registered_OK,
                 Snackbar.LENGTH_LONG
-            ).show()
+            ).showCentered()
             binding.who.requestFocus()
             Unit
         }

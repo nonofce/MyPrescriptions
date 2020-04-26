@@ -31,7 +31,7 @@ class PrescriptionListViewModel(
         object StartLoading : UiModel()
         object EndLoading : UiModel()
         class PrescriptionsLoaded(val prescriptions: List<Prescription>) : UiModel()
-        class DeletePrescription(val prescription: Prescription) : UiModel()
+        class DeletePrescription(val event: Event<Prescription>) : UiModel()
     }
 
     init {
@@ -49,7 +49,7 @@ class PrescriptionListViewModel(
     }
 
     fun onPrescriptionDelete(prescription: Prescription) {
-        _uiModel.value = UiModel.DeletePrescription(prescription)
+        _uiModel.value = UiModel.DeletePrescription(Event((prescription)))
     }
 
     fun deletePrescription(prescription: Prescription) {

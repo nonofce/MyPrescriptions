@@ -1,11 +1,14 @@
 package com.nonofce.android.myprescriptions.common
 
 import android.app.Application
+import android.view.Gravity
+import android.widget.FrameLayout
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.google.android.material.snackbar.Snackbar
 import kotlin.properties.Delegates
 
 inline fun <ViewHolder : RecyclerView.ViewHolder, T> RecyclerView.Adapter<ViewHolder>.basicDiffUtil(
@@ -40,3 +43,9 @@ fun <T : Application> Fragment.getApp(): T =
     context!!.applicationContext as T
 
 
+fun Snackbar.showCentered(){
+    val params = view.layoutParams as FrameLayout.LayoutParams;
+    params.gravity = Gravity.CENTER_VERTICAL
+    view.layoutParams = params
+    show()
+}
