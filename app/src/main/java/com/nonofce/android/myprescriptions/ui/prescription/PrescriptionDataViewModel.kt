@@ -1,17 +1,21 @@
 package com.nonofce.android.myprescriptions.ui.prescription
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nonofce.android.domain.Prescription
 import com.nonofce.android.myprescriptions.common.DataOperations.ADD
+import com.nonofce.android.myprescriptions.common.DataOperations.UPDATE
 import com.nonofce.android.usecases.AddNewPrescription
+import com.nonofce.android.usecases.UpdatePrescription
 import kotlinx.coroutines.launch
 import java.util.*
 
-class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescription) : ViewModel() {
+class PrescriptionDataViewModel(
+    private val addNewPrescription: AddNewPrescription,
+    private val updatePrescription: UpdatePrescription
+) : ViewModel() {
 
     enum class FIELD {
         WHO, WHERE, WHEN
@@ -33,6 +37,7 @@ class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescripti
 
     sealed class UiModel {
         object PrescriptionRegisteredOk : UiModel()
+        object PrescriptionUpdatedOk : UiModel()
         class InvalidData(val fields: List<FIELD>) : UiModel()
     }
 
@@ -45,15 +50,31 @@ class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescripti
         if (invalidFields.isEmpty()) {
             when (dataOperation) {
                 ADD -> {
-                    var copy = prescription.copy(
+                    val copy = prescription.copy(
                         id = UUID.randomUUID().toString(),
                         who = who.value!!, where = where.value!!, date = date
                     )
                     addNewPrescription(copy)
                 }
+                UPDATE -> {
+                    val copy = prescription.copy(
+                        who = who.value!!, where = where.value!!, date = date
+                    )
+                    updatePrescription(copy)
+                }
+                else -> {
+                    // Deletion are processed on another flow
+                }
             }
         } else {
             _uiModel.value = UiModel.InvalidData(invalidFields)
+        }
+    }
+
+    private fun updatePrescription(prescription: Prescription) {
+        viewModelScope.launch {
+            updatePrescription.execute(prescription)
+            _uiModel.value = UiModel.PrescriptionUpdatedOk
         }
     }
 

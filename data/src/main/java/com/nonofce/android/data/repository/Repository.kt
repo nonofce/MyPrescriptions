@@ -13,7 +13,11 @@ class Repository(private val localDataSource: LocalDataSource) {
         localDataSource.addPrescription(prescription)
     }
 
-    suspend fun deletePrescription(prescriptionId: String){
+    suspend fun deletePrescription(prescriptionId: String) {
         localDataSource.deletePrescription(prescriptionId)
+    }
+
+    suspend fun updatePrescription(prescription: Prescription) {
+        localDataSource.updatePrescription(prescription)
     }
 }

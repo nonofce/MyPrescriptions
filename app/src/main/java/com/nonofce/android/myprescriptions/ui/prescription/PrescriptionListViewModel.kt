@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nonofce.android.domain.Prescription
+import com.nonofce.android.myprescriptions.common.DataOperations
+import com.nonofce.android.myprescriptions.common.DataOperations.ADD
+import com.nonofce.android.myprescriptions.common.DataOperations.UPDATE
 import com.nonofce.android.myprescriptions.common.Event
 import com.nonofce.android.usecases.DeletePrescription
 import com.nonofce.android.usecases.LoadPrescriptions
@@ -19,8 +22,8 @@ class PrescriptionListViewModel(
     val uiModel: LiveData<UiModel>
         get() = _uiModel
 
-    private val _navigation = MutableLiveData<Event<Boolean>>()
-    val navigation: LiveData<Event<Boolean>>
+    private val _navigation = MutableLiveData<Event<Pair<DataOperations, Prescription>>>()
+    val navigation: LiveData<Event<Pair<DataOperations, Prescription>>>
         get() = _navigation
 
     private var _progressVisibility = MutableLiveData<Boolean>()
@@ -61,7 +64,7 @@ class PrescriptionListViewModel(
     }
 
     fun onPrescriptionEdit(prescription: Prescription) {
-
+        _navigation.value = Event(UPDATE to prescription)
     }
 
     fun onPrescriptionSelect(prescription: Prescription) {
@@ -69,6 +72,6 @@ class PrescriptionListViewModel(
     }
 
     fun navigateToNewPrescription() {
-        _navigation.value = Event(true)
+        _navigation.value = Event(ADD to Prescription("", "", "", ""))
     }
 }

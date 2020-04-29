@@ -21,3 +21,6 @@ fun Prescription.toDomain(): DomainPrescription = DomainPrescription(id, who, wh
 
 fun DomainPrescription.toNewLocal(): Prescription =
     Prescription(UUID.randomUUID().toString(), who, where, date)
+
+fun DomainPrescription.toLocal(): Prescription =
+    Prescription(id, who, where, date)

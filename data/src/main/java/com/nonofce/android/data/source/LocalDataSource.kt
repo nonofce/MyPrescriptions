@@ -7,4 +7,5 @@ interface LocalDataSource {
     suspend fun loadAllPrescriptions(): List<Prescription>
     suspend fun addPrescription(prescription: Prescription)
     suspend fun deletePrescription(prescriptionId: String)
+    suspend fun updatePrescription(prescription: Prescription)
 }

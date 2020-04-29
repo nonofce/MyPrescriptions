@@ -20,8 +20,7 @@ import com.nonofce.android.myprescriptions.common.showWithGravity
 import com.nonofce.android.myprescriptions.databinding.FragmentPrescriptionDataBinding
 import com.nonofce.android.myprescriptions.model.toDomain
 import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel
-import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel.InvalidData
-import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel.PrescriptionRegisteredOk
+import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel.*
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,6 +33,7 @@ class PrescriptionData : Fragment() {
     private val args: PrescriptionDataArgs by navArgs<PrescriptionDataArgs>()
 
     private val userFormatter = SimpleDateFormat("dd-MMMM-yyyy")
+    private val dbFormatter = SimpleDateFormat("yyyy-MM-dd")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +49,10 @@ class PrescriptionData : Fragment() {
         component = getApp<Application>().appComponent.plus(PrescriptionDataModule())
 
         with(viewModel) {
-            prescription = args.prescription.toDomain()
+            prescription = if (!args.prescription.date.isBlank()) {
+                args.prescription.copy(date = userFormatter.format(dbFormatter.parse(args.prescription.date)))
+                    .toDomain()
+            } else args.prescription.toDomain()
             dataOperation = args.dataOperation
         }
 
@@ -82,9 +85,8 @@ class PrescriptionData : Fragment() {
                 who.error = null
                 where.error = null
                 prescriptionDate.error = null
-                val dbFormatter = SimpleDateFormat("yyyy-MM-dd")
                 val rawDate = prescriptionDate.editText?.text.toString()
-                val formattedDate = if (!rawDate.isNullOrBlank()) dbFormatter.format(
+                val formattedDate = if (!rawDate.isBlank()) dbFormatter.format(
                     userFormatter.parse(prescriptionDate.editText?.text.toString())
                 ) else ""
                 viewModel.processPrescription(formattedDate)
@@ -99,6 +101,15 @@ class PrescriptionData : Fragment() {
             Snackbar.make(
                 binding.root,
                 R.string.prescription_registered_OK,
+                Snackbar.LENGTH_SHORT
+            ).showWithGravity()
+            binding.who.requestFocus()
+            Unit
+        }
+        is PrescriptionUpdatedOk -> {
+            Snackbar.make(
+                binding.root,
+                R.string.prescription_updated_OK,
                 Snackbar.LENGTH_SHORT
             ).showWithGravity()
             binding.who.requestFocus()
