@@ -1,5 +1,6 @@
 package com.nonofce.android.myprescriptions.ui.prescription
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -8,6 +9,7 @@ import com.nonofce.android.domain.Prescription
 import com.nonofce.android.myprescriptions.common.DataOperations.ADD
 import com.nonofce.android.usecases.AddNewPrescription
 import kotlinx.coroutines.launch
+import java.util.*
 
 class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescription) : ViewModel() {
 
@@ -43,14 +45,14 @@ class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescripti
         if (invalidFields.isEmpty()) {
             when (dataOperation) {
                 ADD -> {
-                    addNewPrescription(
-                        prescription.copy(
-                            who = who.value!!, where = where.value!!, date = date
-                        )
+                    var copy = prescription.copy(
+                        id = UUID.randomUUID().toString(),
+                        who = who.value!!, where = where.value!!, date = date
                     )
+                    addNewPrescription(copy)
                 }
             }
-        }else {
+        } else {
             _uiModel.value = UiModel.InvalidData(invalidFields)
         }
     }
@@ -60,10 +62,10 @@ class PrescriptionDataViewModel(private val addNewPrescription: AddNewPrescripti
         if (who.value.isNullOrBlank()) {
             invalidFields.add(FIELD.WHO)
         }
-        if(where.value.isNullOrBlank()){
+        if (where.value.isNullOrBlank()) {
             invalidFields.add(FIELD.WHERE)
         }
-        if(moment.value.isNullOrBlank()){
+        if (moment.value.isNullOrBlank()) {
             invalidFields.add(FIELD.WHEN)
         }
         return invalidFields

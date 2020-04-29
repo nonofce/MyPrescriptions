@@ -1,6 +1,7 @@
 package com.nonofce.android.myprescriptions.ui.prescription
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,6 +28,7 @@ class PrescriptionList : Fragment() {
     private lateinit var component: PrescriptionListComponent
     private val viewModel by lazy { getViewModel { component.viewModel } }
     private lateinit var binding: FragmentPrescriptionListBinding
+    private lateinit var adapter: PrescriptionAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -61,11 +63,12 @@ class PrescriptionList : Fragment() {
             }
         }
 
-        prescriptionsList.adapter = PrescriptionAdapter(
+        adapter = PrescriptionAdapter(
             viewModel::onPrescriptionSelect,
             viewModel::onPrescriptionEdit,
             viewModel::onPrescriptionDelete
         )
+        prescriptionsList.adapter = adapter
     }
 
     fun updateUi(uiModel: UiModel) {
@@ -77,7 +80,7 @@ class PrescriptionList : Fragment() {
                 binding.prescriptionListProgressBar.visibility = View.GONE
             }
             is PrescriptionsLoaded -> {
-                (prescriptionsList.adapter as PrescriptionAdapter).items = uiModel.prescriptions
+                adapter.items = uiModel.prescriptions
             }
             is DeletePrescription -> {
                 uiModel.event?.getContentIfNotHandled()?.let { prescription ->

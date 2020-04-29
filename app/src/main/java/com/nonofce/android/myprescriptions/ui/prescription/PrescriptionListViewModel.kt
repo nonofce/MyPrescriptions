@@ -40,10 +40,10 @@ class PrescriptionListViewModel(
 
     fun loadPrescriptions() {
         viewModelScope.launch {
-            //_uiModel.value = UiModel.StartLoading
+//            _uiModel.value = UiModel.StartLoading
             val result = loadPrescriptions.execute()
             _uiModel.value = UiModel.PrescriptionsLoaded(result)
-            //_uiModel.value = UiModel.EndLoading
+//            _uiModel.value = UiModel.EndLoading
         }
 
     }

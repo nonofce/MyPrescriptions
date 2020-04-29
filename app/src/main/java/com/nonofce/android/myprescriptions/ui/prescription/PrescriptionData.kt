@@ -99,7 +99,7 @@ class PrescriptionData : Fragment() {
             Snackbar.make(
                 binding.root,
                 R.string.prescription_registered_OK,
-                Snackbar.LENGTH_LONG
+                Snackbar.LENGTH_SHORT
             ).showWithGravity()
             binding.who.requestFocus()
             Unit
