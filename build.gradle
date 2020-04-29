@@ -39,6 +39,7 @@ allprojects {
                 lifecycleExt: 'androidx.lifecycle:lifecycle-extensions:2.2.0',
                 lifecycleVm: 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.2.0',
                 room: 'androidx.room:room-runtime:2.2.3',
+                roomKtx: 'androidx.room:room-ktx:2.2.3',
                 dagger2: "com.google.dagger:dagger:$dagger_version",
                 legacySupport: 'androidx.legacy:legacy-support-v4:1.0.0'
         ]

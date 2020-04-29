@@ -7,15 +7,15 @@ import com.nonofce.android.myprescriptions.model.Prescription as ModelPrescripti
 interface PrescriptionDao {
 
     @Query("SELECT * FROM Prescription ORDER BY date DESC")
-    fun selectAllPrescriptions(): List<ModelPrescription>
+    suspend fun selectAllPrescriptions(): List<ModelPrescription>
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun addNewPrescription(prescription: ModelPrescription)
+    suspend fun addNewPrescription(prescription: ModelPrescription)
 
     @Query("DELETE FROM Prescription WHERE id = :prescriptionId")
-    fun deletePrescription(prescriptionId: String)
+    suspend fun deletePrescription(prescriptionId: String)
 
     @Update(onConflict = OnConflictStrategy.REPLACE)
-    fun updatePrescription(prescription: ModelPrescription)
+    suspend fun updatePrescription(prescription: ModelPrescription)
 
 }
