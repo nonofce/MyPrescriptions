@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.observe
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -18,7 +18,6 @@ import com.nonofce.android.myprescriptions.common.EventObserver
 import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
 import com.nonofce.android.myprescriptions.databinding.FragmentPrescriptionListBinding
-import com.nonofce.android.myprescriptions.model.Prescription
 import com.nonofce.android.myprescriptions.model.toLocal
 import com.nonofce.android.myprescriptions.model.toNewLocal
 import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionListViewModel.UiModel
@@ -46,11 +45,13 @@ class PrescriptionList : Fragment() {
         navController = view.findNavController()
         component = getApp<Application>().appComponent.plus(PrescriptionListModule())
 
-        viewModel.uiModel.observe(viewLifecycleOwner, Observer(::updateUi))
+        viewModel.uiModel.observe(viewLifecycleOwner) {
+            updateUi(it)
+        }
 
         viewModel.navigation.observe(viewLifecycleOwner, EventObserver {
             val (operation, prescription) = it
-            var action:NavDirections? = null
+            var action: NavDirections? = null
             when (operation) {
                 ADD -> {
                     action = PrescriptionListDirections.fromPrescriptionListToPrescriptionData(
