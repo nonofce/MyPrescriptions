@@ -13,6 +13,9 @@
         <action
             android:id="@+id/from_prescriptionList_to_prescriptionData"
             app:destination="@id/prescriptionData" />
+        <action
+            android:id="@+id/from_prescriptionList_to_medicationList"
+            app:destination="@id/medicationList" />
     </fragment>
     <fragment
         android:id="@+id/prescriptionData"
@@ -24,6 +27,33 @@
             app:argType="com.nonofce.android.myprescriptions.model.Prescription" />
         <argument
             android:name="dataOperation"
-            app:argType="com.nonofce.android.myprescriptions.common.DataOperations" />
+            app:argType="com.nonofce.android.myprescriptions.common.Operations" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicationList"
+        android:name="com.nonofce.android.myprescriptions.ui.medications.MedicationList"
+        android:label="fragment_medication_list"
+        tools:layout="@layout/fragment_medication_list" >
+        <argument
+            android:name="prescription"
+            app:argType="com.nonofce.android.myprescriptions.model.Prescription" />
+        <argument
+            android:name="operation"
+            app:argType="com.nonofce.android.myprescriptions.common.Operations" />
+        <action
+            android:id="@+id/from_medicationList_to_medicationData"
+            app:destination="@id/medicationData" />
+    </fragment>
+    <fragment
+        android:id="@+id/medicationData"
+        android:name="com.nonofce.android.myprescriptions.ui.medications.MedicationData"
+        android:label="fragment_medication_data"
+        tools:layout="@layout/fragment_medication_data" >
+        <argument
+            android:name="medication"
+            app:argType="com.nonofce.android.myprescriptions.model.Medication" />
+        <argument
+            android:name="operation"
+            app:argType="com.nonofce.android.myprescriptions.common.Operations" />
     </fragment>
 </navigation>

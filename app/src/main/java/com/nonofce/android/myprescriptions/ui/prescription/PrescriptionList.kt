@@ -12,8 +12,7 @@ import androidx.navigation.findNavController
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nonofce.android.myprescriptions.Application
 import com.nonofce.android.myprescriptions.R
-import com.nonofce.android.myprescriptions.common.DataOperations.ADD
-import com.nonofce.android.myprescriptions.common.DataOperations.UPDATE
+import com.nonofce.android.myprescriptions.common.Operations.*
 import com.nonofce.android.myprescriptions.common.EventObserver
 import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
@@ -53,7 +52,7 @@ class PrescriptionList : Fragment() {
             val (operation, prescription) = it
             var action: NavDirections? = null
             when (operation) {
-                ADD -> {
+                ADD_PRESCRIPTION -> {
                     action = PrescriptionListDirections.fromPrescriptionListToPrescriptionData(
                         prescription.toNewLocal(), operation
                     )
@@ -61,7 +60,7 @@ class PrescriptionList : Fragment() {
                         it.label = getString(R.string.new_prescription_data)
                     }
                 }
-                UPDATE -> {
+                UPDATE_PRESCRIPTION -> {
 
                     action = PrescriptionListDirections.fromPrescriptionListToPrescriptionData(
                         prescription.toLocal(), operation
@@ -70,8 +69,15 @@ class PrescriptionList : Fragment() {
                         it.label = getString(R.string.edit_prescription_data)
                     }
                 }
+                LOAD_MEDICATION_LIST -> {
+                    action = PrescriptionListDirections.fromPrescriptionListToMedicationList(prescription.toLocal(), operation)
+
+                    navController.graph.findNode(R.id.medicationList)?.let {
+                        it.label = getString(R.string.medication_list)
+                    }
+                }
                 else -> {
-                    // Deletion are processed on another flow
+                    // Deletions are processed on another flow
                 }
             }
             action?.let {

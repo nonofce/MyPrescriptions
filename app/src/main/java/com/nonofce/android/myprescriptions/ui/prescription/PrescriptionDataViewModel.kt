@@ -5,8 +5,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.nonofce.android.domain.Prescription
-import com.nonofce.android.myprescriptions.common.DataOperations.ADD
-import com.nonofce.android.myprescriptions.common.DataOperations.UPDATE
+import com.nonofce.android.myprescriptions.common.Operations.ADD_PRESCRIPTION
+import com.nonofce.android.myprescriptions.common.Operations.UPDATE_PRESCRIPTION
 import com.nonofce.android.usecases.AddNewPrescription
 import com.nonofce.android.usecases.UpdatePrescription
 import kotlinx.coroutines.launch
@@ -25,7 +25,7 @@ class PrescriptionDataViewModel(
     var where = MutableLiveData<String>("")
     var moment = MutableLiveData<String>("")
 
-    var dataOperation = ADD
+    var dataOperation = ADD_PRESCRIPTION
 
     var prescription: Prescription = Prescription("", "", "", "")
         set(value) {
@@ -49,14 +49,14 @@ class PrescriptionDataViewModel(
         val invalidFields = getInvalidFields()
         if (invalidFields.isEmpty()) {
             when (dataOperation) {
-                ADD -> {
+                ADD_PRESCRIPTION -> {
                     val copy = prescription.copy(
                         id = UUID.randomUUID().toString(),
                         who = who.value!!, where = where.value!!, date = date
                     )
                     addNewPrescription(copy)
                 }
-                UPDATE -> {
+                UPDATE_PRESCRIPTION -> {
                     val copy = prescription.copy(
                         who = who.value!!, where = where.value!!, date = date
                     )

@@ -13,15 +13,11 @@ import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.snackbar.Snackbar
 import com.nonofce.android.myprescriptions.Application
 import com.nonofce.android.myprescriptions.R
-import com.nonofce.android.myprescriptions.common.ONE_DAY
-import com.nonofce.android.myprescriptions.common.getApp
-import com.nonofce.android.myprescriptions.common.getViewModel
-import com.nonofce.android.myprescriptions.common.showWithGravity
+import com.nonofce.android.myprescriptions.common.*
 import com.nonofce.android.myprescriptions.databinding.FragmentPrescriptionDataBinding
 import com.nonofce.android.myprescriptions.model.toDomain
 import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel
 import com.nonofce.android.myprescriptions.ui.prescription.PrescriptionDataViewModel.UiModel.*
-import java.text.SimpleDateFormat
 import java.util.*
 
 class PrescriptionData : Fragment() {
@@ -31,9 +27,6 @@ class PrescriptionData : Fragment() {
     private lateinit var component: PrescriptionDataComponent
     private val viewModel by lazy { getViewModel { component.viewModel } }
     private val args: PrescriptionDataArgs by navArgs<PrescriptionDataArgs>()
-
-    private val userFormatter = SimpleDateFormat("dd-MMMM-yyyy")
-    private val dbFormatter = SimpleDateFormat("yyyy-MM-dd")
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -73,9 +66,7 @@ class PrescriptionData : Fragment() {
                 val picker = builder.build()
 
                 picker.addOnPositiveButtonClickListener {
-                    val calendar = Calendar.getInstance()
-                    calendar.timeInMillis = it + ONE_DAY
-                    prescriptionDate.editText?.setText(userFormatter.format(calendar.time))
+                    updateTextControlWithTimeFromPicker(it, prescriptionDate)
                 }
 
                 picker.show(parentFragmentManager, picker.toString())
@@ -85,11 +76,7 @@ class PrescriptionData : Fragment() {
                 who.error = null
                 where.error = null
                 prescriptionDate.error = null
-                val rawDate = prescriptionDate.editText?.text.toString()
-                val formattedDate = if (!rawDate.isBlank()) dbFormatter.format(
-                    userFormatter.parse(prescriptionDate.editText?.text.toString())
-                ) else ""
-                viewModel.processPrescription(formattedDate)
+                viewModel.processPrescription(transformDateFormat(prescriptionDate))
             }
         }
 

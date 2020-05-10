@@ -6,6 +6,8 @@
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:timePickerDialogTheme">@style/MyTimePickerDialogStyle</item>
     </style>
 
     <style name="CircleButton">
@@ -13,4 +15,8 @@
         <item name="cornerSize">50%</item>
     </style>
 
+    <style name="MyTimePickerDialogStyle" parent="ThemeOverlay.AppCompat.Dialog">
+        <item name="android:colorAccent">@color/colorPrimary</item>
+        <item name="android:colorControlActivated">@color/colorPrimaryDark</item>
+    </style>
 </resources>

@@ -3,6 +3,7 @@
 
     <string name="new_prescription_data">New Prescription</string>
     <string name="edit_prescription_data">Modify Prescription</string>
+    <string name="medication_list">Medications</string>
     <string name="prescription_list_name">My Prescriptions</string>
     <string name="prescription_doctor_name">Who made it</string>
     <string name="prescription_date">When was made</string>
@@ -10,7 +11,7 @@
     <string name="done_button">Done</string>
     <string name="prescription_registered_OK">Your prescription has been registered</string>
     <string name="prescription_updated_OK">Your prescription has been updated</string>
-    <string name="mandatory_field">This field should be entered</string>
+    <string name="mandatory_field">This field is mandatory</string>
     <string name="who_made_the_prescription">Who made the prescription</string>
     <string name="where_was_made_the_prescription">Where was made the prescription</string>
     <string name="cancel_button">Cancel</string>
@@ -18,4 +19,62 @@
     <string name="prescription_delete_confirmation">Are you sure you will delete this prescription?</string>
     <string name="confirmation">Confirmation</string>
 
+    <string name="add_medication_label">New Medication</string>
+    <string name="medication_name">Name</string>
+    <string name="medication_strength">Strength</string>
+    <string name="medication_how_much">How much</string>
+    <string name="medication_amount">Amount</string>
+    <string name="medication_starting_date">Starting from</string>
+    <string name="medication_starting_time">At</string>
+    <string name="medication_registered_OK">Your medication has been registered</string>
+
+    <string name="medication_route_label">Route</string>
+
+    <string-array name="medication_route_name">
+        <item>By Mouth</item>
+        <item>Intramuscular</item>
+        <item>Intravenous</item>
+        <item>Intradermal</item>
+        <item>Intranasal</item>
+        <item>Topical</item>
+        <item>Sublingual</item>
+        <item>Buccal</item>
+        <item>Intraperitoneal</item>
+        <item>Per rectum</item>
+    </string-array>
+
+    <string-array name="medication_route_code">
+        <item>PO</item>
+        <item>IM</item>
+        <item>IV</item>
+        <item>ID</item>
+        <item>IN</item>
+        <item>TP</item>
+        <item>SL</item>
+        <item>BUCC</item>
+        <item>IP</item>
+        <item>PR</item>
+    </string-array>
+
+    <string name="medication_freq_label">Frequency</string>
+
+    <string-array name="medication_freq_name">
+        <item>Every 4 hours</item>
+        <item>Four times a day</item>
+        <item>Three times a day</item>
+        <item>Twice a day</item>
+        <item>Daily</item>
+        <item>Every other day</item>
+        <item>Weekly</item>
+    </string-array>
+
+    <string-array name="medication_freq_code">
+        <item>Q4H</item>
+        <item>QID</item>
+        <item>TID</item>
+        <item>BID</item>
+        <item>DL</item>
+        <item>EOD</item>
+        <item>WKL</item>
+    </string-array>
 </resources>

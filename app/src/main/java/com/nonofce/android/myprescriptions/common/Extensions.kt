@@ -5,13 +5,18 @@ import android.graphics.Color
 import android.view.Gravity
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
+import com.google.android.material.textfield.TextInputLayout
 import com.nonofce.android.myprescriptions.R
+import org.w3c.dom.Text
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.properties.Delegates
 
 inline fun <ViewHolder : RecyclerView.ViewHolder, T> RecyclerView.Adapter<ViewHolder>.basicDiffUtil(
@@ -47,10 +52,11 @@ fun <T : Application> Fragment.getApp(): T =
 
 
 fun Snackbar.showWithGravity(gravity: Int = Gravity.CENTER_VERTICAL) {
-    val params = view.layoutParams as FrameLayout.LayoutParams;
+    val params = view.layoutParams as FrameLayout.LayoutParams
     params.gravity = gravity
     view.layoutParams = params
-    view.setBackgroundColor(context.resources.getColor(R.color.colorAccent))
+    ContextCompat.getColor(context, R.color.colorAccent)
+    view.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent))
     val textView = view.findViewById<TextView>(R.id.snackbar_text)
     textView.setTextColor(Color.BLACK)
     show()
