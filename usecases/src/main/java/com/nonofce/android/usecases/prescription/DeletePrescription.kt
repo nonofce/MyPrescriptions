@@ -1,4 +1,4 @@
-package com.nonofce.android.usecases
+package com.nonofce.android.usecases.prescription
 
 import com.nonofce.android.data.repository.Repository
 
