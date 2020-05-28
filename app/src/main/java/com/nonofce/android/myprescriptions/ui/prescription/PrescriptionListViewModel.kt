@@ -8,8 +8,8 @@ import com.nonofce.android.domain.Prescription
 import com.nonofce.android.myprescriptions.common.Operations
 import com.nonofce.android.myprescriptions.common.Operations.*
 import com.nonofce.android.myprescriptions.common.Event
-import com.nonofce.android.usecases.DeletePrescription
-import com.nonofce.android.usecases.LoadPrescriptions
+import com.nonofce.android.usecases.prescription.DeletePrescription
+import com.nonofce.android.usecases.prescription.LoadPrescriptions
 import kotlinx.coroutines.launch
 
 class PrescriptionListViewModel(

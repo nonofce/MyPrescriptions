@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.nonofce.android.domain.Prescription
 import com.nonofce.android.myprescriptions.common.Operations.ADD_PRESCRIPTION
 import com.nonofce.android.myprescriptions.common.Operations.UPDATE_PRESCRIPTION
-import com.nonofce.android.usecases.AddNewPrescription
-import com.nonofce.android.usecases.UpdatePrescription
+import com.nonofce.android.usecases.prescription.AddNewPrescription
+import com.nonofce.android.usecases.prescription.UpdatePrescription
 import kotlinx.coroutines.launch
 import java.util.*
 

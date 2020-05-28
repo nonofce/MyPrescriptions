@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
@@ -17,6 +18,8 @@ import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
 import com.nonofce.android.myprescriptions.databinding.FragmentMedicationListBinding
 import com.nonofce.android.myprescriptions.model.toLocal
+import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.MedicationLoaded
+import kotlinx.android.synthetic.main.fragment_medication_list.*
 import java.util.*
 
 class MedicationList : Fragment() {
@@ -26,6 +29,7 @@ class MedicationList : Fragment() {
     private lateinit var component: MedicationListComponent
     private val viewModel by lazy { getViewModel { component.viewModel } }
     private lateinit var navController: NavController
+    private lateinit var adapter: MedicationAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,28 +53,52 @@ class MedicationList : Fragment() {
             }
         }
 
-        viewModel.navigation.observe(viewLifecycleOwner, EventObserver {
-            val (medication, operation) = it
-            var direction: NavDirections? = null
-            when (operation) {
-                Operations.ADD_MEDICATION -> {
-                    direction = MedicationListDirections.fromMedicationListToMedicationData(
-                        medication.copy(id = UUID.randomUUID().toString()).toLocal(),
-                        operation
-                    )
+        adapter = MedicationAdapter(
+            viewModel::onSelectMedication,
+            viewModel::onEditMedication,
+            viewModel::onDeleteMedication
+        )
+        medicationsList.adapter = adapter
 
-                    navController.graph.findNode(R.id.medicationData)?.let {
-                        it.label = getString(R.string.add_medication_label)
+        with(viewModel) {
+
+            loadmedications(prescription.id)
+
+            uiModel.observe(viewLifecycleOwner, Observer(::updateUi))
+
+            navigation.observe(viewLifecycleOwner, EventObserver {
+                val (medication, operation) = it
+                var direction: NavDirections? = null
+                when (operation) {
+                    Operations.ADD_MEDICATION -> {
+                        direction = MedicationListDirections.fromMedicationListToMedicationData(
+                            medication.copy(id = UUID.randomUUID().toString()).toLocal(),
+                            operation
+                        )
+
+                        navController.graph.findNode(R.id.medicationData)?.let {
+                            it.label = getString(R.string.add_medication_label)
+                        }
+                    }
+                    else -> {
+                        // Nothing to do, all flows are covered
                     }
                 }
-                else -> {
-                    // Nothing to do, all flows are covered
+                direction?.let {
+                    navController.navigate(direction)
                 }
+            })
+        }
+
+
+    }
+
+    private fun updateUi(uiModel: MedicationListViewModel.UiModel) {
+        when(uiModel){
+            is MedicationLoaded ->{
+                adapter.items = uiModel.medications
             }
-            direction?.let {
-                navController.navigate(direction)
-            }
-        })
+        }
     }
 
 }

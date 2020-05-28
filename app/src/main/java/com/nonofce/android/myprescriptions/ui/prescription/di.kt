@@ -1,10 +1,10 @@
 package com.nonofce.android.myprescriptions.ui.prescription
 
 import com.nonofce.android.data.repository.Repository
-import com.nonofce.android.usecases.AddNewPrescription
-import com.nonofce.android.usecases.DeletePrescription
-import com.nonofce.android.usecases.LoadPrescriptions
-import com.nonofce.android.usecases.UpdatePrescription
+import com.nonofce.android.usecases.prescription.AddNewPrescription
+import com.nonofce.android.usecases.prescription.DeletePrescription
+import com.nonofce.android.usecases.prescription.LoadPrescriptions
+import com.nonofce.android.usecases.prescription.UpdatePrescription
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent

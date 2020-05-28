@@ -2,6 +2,7 @@ package com.nonofce.android.myprescriptions.ui.medications
 
 import com.nonofce.android.data.repository.Repository
 import com.nonofce.android.usecases.medication.AddMedication
+import com.nonofce.android.usecases.medication.LoadMedication
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -10,7 +11,10 @@ import dagger.Subcomponent
 class MedicationListModule {
 
     @Provides
-    fun getMedicationListViewModelProvider() = MedicationListViewModel()
+    fun provideLoadMedicationUseCase(repository: Repository) = LoadMedication(repository)
+
+    @Provides
+    fun getMedicationListViewModelProvider(loadMedication: LoadMedication) = MedicationListViewModel(loadMedication)
 }
 
 @Subcomponent(modules = [MedicationListModule::class])
