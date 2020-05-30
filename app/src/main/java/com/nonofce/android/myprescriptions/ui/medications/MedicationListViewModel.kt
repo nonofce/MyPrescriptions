@@ -8,6 +8,7 @@ import com.nonofce.android.domain.Medication
 import com.nonofce.android.myprescriptions.common.Event
 import com.nonofce.android.myprescriptions.common.Operations
 import com.nonofce.android.myprescriptions.common.Operations.ADD_MEDICATION
+import com.nonofce.android.myprescriptions.common.Operations.UPDATE_MEDICATION
 import com.nonofce.android.usecases.medication.DeleteMedication
 import com.nonofce.android.usecases.medication.LoadMedication
 import kotlinx.coroutines.launch
@@ -24,8 +25,7 @@ class MedicationListViewModel(
 
     sealed class UiModel {
         class MedicationLoaded(val medications: List<Medication>) : UiModel()
-        class DeleteMedication(val medication: Medication) : UiModel()
-        class EditMedication(val medicationEvent: Event<Medication>) : UiModel()
+        class DeleteMedication(val medicationEvent: Event<Medication>) : UiModel()
     }
 
     private var _uiModel = MutableLiveData<UiModel>()
@@ -47,7 +47,6 @@ class MedicationListViewModel(
                     "PO", "Q4H", "", "", ""
                 ) to ADD_MEDICATION
             )
-
     }
 
     fun onSelectMedication(medication: Medication) {
@@ -55,7 +54,7 @@ class MedicationListViewModel(
     }
 
     fun onDeleteMedication(medication: Medication) {
-        _uiModel.value = UiModel.EditMedication(Event(medication))
+        _uiModel.value = UiModel.DeleteMedication(Event(medication))
     }
 
     fun deleteMedication(medication: Medication) {
@@ -67,7 +66,7 @@ class MedicationListViewModel(
     }
 
     fun onEditMedication(medication: Medication) {
-        println("onEditMedication ${medication.id}")
+        _navigation.value = Event(medication to UPDATE_MEDICATION)
     }
 
 

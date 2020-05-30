@@ -4,6 +4,7 @@ import com.nonofce.android.data.repository.Repository
 import com.nonofce.android.usecases.medication.AddMedication
 import com.nonofce.android.usecases.medication.DeleteMedication
 import com.nonofce.android.usecases.medication.LoadMedication
+import com.nonofce.android.usecases.medication.UpdateMedication
 import dagger.Module
 import dagger.Provides
 import dagger.Subcomponent
@@ -36,8 +37,11 @@ class MedicationDataModule {
     fun provideAddMedicationUseCase(repository: Repository) = AddMedication(repository)
 
     @Provides
-    fun provideMedicationDataViewModel(addMedication: AddMedication) =
-        MedicationDataViewModel(addMedication)
+    fun provideUpdateMedicationUseCase(repository: Repository) = UpdateMedication(repository)
+
+    @Provides
+    fun provideMedicationDataViewModel(addMedication: AddMedication, updateMedication: UpdateMedication) =
+        MedicationDataViewModel(addMedication, updateMedication)
 
 
 }

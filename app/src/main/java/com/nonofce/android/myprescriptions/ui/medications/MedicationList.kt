@@ -19,8 +19,7 @@ import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
 import com.nonofce.android.myprescriptions.databinding.FragmentMedicationListBinding
 import com.nonofce.android.myprescriptions.model.toLocal
-import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.EditMedication
-import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.MedicationLoaded
+import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.*
 import kotlinx.android.synthetic.main.fragment_medication_list.*
 import java.util.*
 
@@ -82,6 +81,17 @@ class MedicationList : Fragment() {
                             it.label = getString(R.string.add_medication_label)
                         }
                     }
+                    Operations.UPDATE_MEDICATION -> {
+
+                        direction = MedicationListDirections.fromMedicationListToMedicationData(
+                            medication.toLocal(),
+                            operation
+                        )
+
+                        navController.graph.findNode(R.id.medicationData)?.let {
+                            it.label = getString(R.string.update_medication_label)
+                        }
+                    }
                     else -> {
                         // Nothing to do, all flows are covered
                     }
@@ -98,7 +108,7 @@ class MedicationList : Fragment() {
             is MedicationLoaded -> {
                 adapter.items = uiModel.medications
             }
-            is EditMedication -> {
+            is DeleteMedication -> {
                 uiModel.medicationEvent.getContentIfNotHandled()?.let { medication ->
                     MaterialAlertDialogBuilder(context).setMessage(getString(R.string.medication_delete_confirmation))
                         .setTitle(getString(R.string.confirmation))

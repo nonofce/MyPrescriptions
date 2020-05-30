@@ -70,7 +70,7 @@ class MedicationData : Fragment() {
 
             medicationTimeButton.setOnClickListener {
                 val calendar = Calendar.getInstance()
-                val timePicker = TimePickerDialog(
+                TimePickerDialog(
                     context!!,
                     TimePickerDialog.OnTimeSetListener { view, hourOfDay, minute ->
                         medicationStartTime.editText?.setText("$hourOfDay:$minute")
@@ -104,7 +104,9 @@ class MedicationData : Fragment() {
             medicationRoute.value = routesCode[0]
             medicationFreq.value = frequenciesCode[0]
 
-            medication = medicationArg.toDomain()
+            medication =
+                medicationArg.copy(startDate = userFormatter.format(dbFormatter.parse(medicationArg.startDate)))
+                    .toDomain()
 
             uiModel.observe(viewLifecycleOwner, Observer(::updateUI))
         }
@@ -125,13 +127,13 @@ class MedicationData : Fragment() {
             uiModel.invalidFields.forEach { invalidField ->
                 invalidInput.forEach { input ->
                     val (field, control) = input
-                    if (invalidField == field){
+                    if (invalidField == field) {
                         control.error = getString(R.string.mandatory_field)
                     }
                 }
             }
         }
-        is UiModel.MedicationRegisteredOK ->{
+        is UiModel.MedicationRegisteredOK -> {
             Snackbar.make(
                 binding.root,
                 R.string.medication_registered_OK,
@@ -140,8 +142,14 @@ class MedicationData : Fragment() {
             binding.medicationName.requestFocus()
             Unit
         }
-        else -> {
-
+        is UiModel.MedicationUpdatedOk -> {
+            Snackbar.make(
+                binding.root,
+                R.string.medication_updated_OK,
+                Snackbar.LENGTH_SHORT
+            ).showWithGravity()
+            binding.medicationName.requestFocus()
+            Unit
         }
     }
 

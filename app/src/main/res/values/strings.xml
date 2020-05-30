@@ -20,6 +20,7 @@
     <string name="confirmation">Confirmation</string>
 
     <string name="add_medication_label">New Medication</string>
+    <string name="update_medication_label">Modify Medication</string>
     <string name="medication_name">Name</string>
     <string name="medication_strength">Strength</string>
     <string name="medication_how_much">How much</string>
@@ -27,6 +28,7 @@
     <string name="medication_starting_date">Starting from</string>
     <string name="medication_starting_time">At</string>
     <string name="medication_registered_OK">Your medication has been registered</string>
+    <string name="medication_updated_OK">Your medication has been updated</string>
     <string name="medication_delete_confirmation">Are you sure you will delete this medication?</string>
 
     <string name="medication_route_label">Route</string>

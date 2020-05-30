@@ -9,9 +9,13 @@ import com.nonofce.android.myprescriptions.common.Operations
 import com.nonofce.android.myprescriptions.common.Operations.ADD_MEDICATION
 import com.nonofce.android.myprescriptions.common.Operations.UPDATE_MEDICATION
 import com.nonofce.android.usecases.medication.AddMedication
+import com.nonofce.android.usecases.medication.UpdateMedication
 import kotlinx.coroutines.launch
 
-class MedicationDataViewModel(private val addMedication: AddMedication) : ViewModel() {
+class MedicationDataViewModel(
+    private val addMedication: AddMedication,
+    private val updateMedication: UpdateMedication
+) : ViewModel() {
 
     enum class FIELD {
         NAME, STRENGTH, AMOUNT, STARTDATE, STARTTIME, HOWMUCH
@@ -85,7 +89,8 @@ class MedicationDataViewModel(private val addMedication: AddMedication) : ViewMo
                         _uiModel.value = UiModel.MedicationRegisteredOK
                     }
                     UPDATE_MEDICATION -> {
-
+                        updateMedication.execute(medication)
+                        _uiModel.value = UiModel.MedicationUpdatedOk
                     }
                     else -> {
 
