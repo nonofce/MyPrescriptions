@@ -10,6 +10,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.nonofce.android.myprescriptions.Application
 import com.nonofce.android.myprescriptions.R
 import com.nonofce.android.myprescriptions.common.EventObserver
@@ -18,6 +19,7 @@ import com.nonofce.android.myprescriptions.common.getApp
 import com.nonofce.android.myprescriptions.common.getViewModel
 import com.nonofce.android.myprescriptions.databinding.FragmentMedicationListBinding
 import com.nonofce.android.myprescriptions.model.toLocal
+import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.EditMedication
 import com.nonofce.android.myprescriptions.ui.medications.MedicationListViewModel.UiModel.MedicationLoaded
 import kotlinx.android.synthetic.main.fragment_medication_list.*
 import java.util.*
@@ -89,14 +91,27 @@ class MedicationList : Fragment() {
                 }
             })
         }
-
-
     }
 
     private fun updateUi(uiModel: MedicationListViewModel.UiModel) {
-        when(uiModel){
-            is MedicationLoaded ->{
+        when (uiModel) {
+            is MedicationLoaded -> {
                 adapter.items = uiModel.medications
+            }
+            is EditMedication -> {
+                uiModel.medicationEvent.getContentIfNotHandled()?.let { medication ->
+                    MaterialAlertDialogBuilder(context).setMessage(getString(R.string.medication_delete_confirmation))
+                        .setTitle(getString(R.string.confirmation))
+                        .setNeutralButton(
+                            getString(
+                                R.string.cancel_button
+                            )
+                        ) { _, _ ->
+
+                        }.setPositiveButton(getString(R.string.ok_button)) { _, _ ->
+                            viewModel.deleteMedication(medication)
+                        }.show()
+                }
             }
         }
     }

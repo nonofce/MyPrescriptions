@@ -8,27 +8,33 @@ import com.nonofce.android.domain.Medication
 import com.nonofce.android.myprescriptions.common.Event
 import com.nonofce.android.myprescriptions.common.Operations
 import com.nonofce.android.myprescriptions.common.Operations.ADD_MEDICATION
+import com.nonofce.android.usecases.medication.DeleteMedication
 import com.nonofce.android.usecases.medication.LoadMedication
 import kotlinx.coroutines.launch
 
-class MedicationListViewModel(private val loadMedication: LoadMedication) : ViewModel() {
+class MedicationListViewModel(
+    private val loadMedication: LoadMedication,
+    private val deleteMedication: DeleteMedication
+) : ViewModel() {
 
     private var _navigation = MutableLiveData<Event<Pair<Medication, Operations>>>()
     val navigation: LiveData<Event<Pair<Medication, Operations>>>
         get() = _navigation
 
 
-    sealed class UiModel{
-        class MedicationLoaded(val medications:List<Medication>): UiModel()
+    sealed class UiModel {
+        class MedicationLoaded(val medications: List<Medication>) : UiModel()
+        class DeleteMedication(val medication: Medication) : UiModel()
+        class EditMedication(val medicationEvent: Event<Medication>) : UiModel()
     }
 
     private var _uiModel = MutableLiveData<UiModel>()
-    val uiModel:LiveData<UiModel>
-    get() = _uiModel
+    val uiModel: LiveData<UiModel>
+        get() = _uiModel
 
-    fun loadmedications(prescriptionId: String){
+    fun loadmedications(prescriptionId: String) {
         viewModelScope.launch {
-            val result:List<Medication> = loadMedication.execute(prescriptionId)
+            val result: List<Medication> = loadMedication.execute(prescriptionId)
             _uiModel.value = UiModel.MedicationLoaded(result)
         }
     }
@@ -44,15 +50,23 @@ class MedicationListViewModel(private val loadMedication: LoadMedication) : View
 
     }
 
-    fun onSelectMedication(medication:Medication){
+    fun onSelectMedication(medication: Medication) {
         println("onSelectMedication ${medication.id}")
     }
 
-    fun onDeleteMedication(medication: Medication){
-        println("onDeleteMedication ${medication.id}")
+    fun onDeleteMedication(medication: Medication) {
+        _uiModel.value = UiModel.EditMedication(Event(medication))
     }
 
-    fun onEditMedication(medication: Medication){
+    fun deleteMedication(medication: Medication) {
+        viewModelScope.launch {
+            deleteMedication.execute(medication)
+            val result = loadMedication.execute(medication.prescriptionId)
+            _uiModel.value = UiModel.MedicationLoaded(result)
+        }
+    }
+
+    fun onEditMedication(medication: Medication) {
         println("onEditMedication ${medication.id}")
     }
 
